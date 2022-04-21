@@ -1,0 +1,233 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+}
+
+body {
+	width: 100vw;
+}
+
+.form {
+	width: 98%;
+	margin: auto;
+}
+
+.page-header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.page-header .gsa-logo {
+	width: 40%;
+}
+
+.page-header .page-title {
+	width: 60%;
+}
+
+.page-header .gsa-logo img {
+	width: 200px;
+	position: relative;
+	top: 0.5em;
+}
+
+.page-header .page-title h1 {
+	color: #5D85B4;
+	font-size: 34px;
+	font-weight: 600;
+	font-family: Arial,sans-serif;
+}
+
+.search-panel {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	column-gap: 1.5em;
+	font-size: 0.9rem;
+}
+
+.search-panel > fieldset:last-child {
+	position: absolute;
+	right: 0;
+}
+
+.radio-group {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	column-gap: 1em;
+	row-gap: 0.2em;
+}
+
+.search-panel-title {
+	color: #555;
+	font-weight: 600;
+}
+
+.search-panel label {
+	margin-left: 0.25em;
+}
+
+.search-panel input[type=text] {
+	color: #555;
+	padding: 2px 5px;
+	width: 150px;
+}
+
+#container {
+	margin-top: 2em;
+	background: #f1f1f1;
+}
+
+.table,
+.table .sub-head {
+	width: 100%;
+}
+
+.table .sub-head tr th {
+	border: none!important;
+	font-weight: 600;
+	background: #5D85B4!important;
+}
+
+.table .sub-head tr td {
+	background: #fff;
+}
+
+.table .sub-head tr th,
+.table .sub-head tr td {
+	font-size: 0.85rem;
+	padding: 0.5em;
+}
+
+.table .sub-head tr th:first-child,
+.table .sub-head tr td:first-child {
+	padding-left: 2em;
+}
+
+/*.table .sub-head column order*/
+.table .sub-head tr th:nth-of-type(1),
+.table .sub-head tr td:nth-of-type(1) {
+	width: 14%;
+}
+
+.table .sub-head tr th:nth-of-type(2),
+.table .sub-head tr td:nth-of-type(2) {
+	width: 10%;	
+}
+
+.table .sub-head tr th:nth-of-type(3),
+.table .sub-head tr td:nth-of-type(3) {
+	width: 8%;	
+}
+
+.table .sub-head tr th:nth-of-type(4),
+.table .sub-head tr td:nth-of-type(4) {
+	width: 10%;	
+}
+
+.table .sub-head tr th:nth-of-type(5),
+.table .sub-head tr td:nth-of-type(5) {
+	width: 10%;	
+}
+
+.table .sub-head tr th:nth-of-type(6),
+.table .sub-head tr td:nth-of-type(6) {
+	width: 8%;	
+}
+
+.table .sub-head tr th:nth-of-type(7),
+.table .sub-head tr td:nth-of-type(7) {
+	width: 10%;	
+}
+
+.table .sub-head tr th:nth-of-type(8),
+.table .sub-head tr td:nth-of-type(8) {
+	width: 10%;	
+}
+
+.table .sub-head tr th:nth-of-type(9),
+.table .sub-head tr td:nth-of-type(9) {
+	width: 12%;
+}
+
+.table .sub-head tr th:nth-of-type(10),
+.table .sub-head tr td:nth-of-type(10) {
+	width: 8%;	
+}
+
+.table .sub-head tr td:nth-of-type(10) a {
+	margin-left: 1.62em;
+}
+
+.table .sub-head .btn-group {
+	display: inline-flex;
+	column-gap: 0.7em;
+}
+
+.pagination {
+	padding: 0em 2em;
+	font-size: 0.85rem;
+}
+
+.pagination .table tr {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0.5em;
+}
+
+/*Page 1 of 1 cell*/
+.pagination .table tr:first-child td:nth-of-type(2) {
+	position: relative;
+	right: 0.7em;
+}
+
+.pagination .table tr td a {
+	color: #205493;
+}
+
+.pagination .table tr td a:hover {
+	color: #0069d9;
+}
+
+.pagination .table tr td label {
+	margin-right: 0.5em;
+}
+
+.pagination .table tr td select {
+	padding-left: 10px;
+	width: auto;
+	min-width: 50px;
+}
+
+.btn {
+	padding: 3.7px 12px 4.3px 12px;
+	color: #fff;
+	background: #205493;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background: #0069d9;
+}
+
+.btn-search {
+	font-size: 1rem;
+	margin-left: 0.5em;
+}
+
+.btn-input {
+	font-size: 0.85rem;
+	padding: 4.8px 12px 5.2px 12px;
+}
+
+.btn-edit,
+.btn-delete {
+	font-size: 0.8rem;
+}

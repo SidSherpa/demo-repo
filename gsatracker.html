@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <script type="text/javascript" src="http://dotracker.prime-vendor.com/gsatracker/js/jquery.min.js"></script>
+      <script>
+         !window.jQuery && document.write('<script src="jquery-1.4.3.min.js"><\/script>');
+      </script>
+      <script type="text/javascript" src="http://dotracker.prime-vendor.com/gsatracker/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+      <script type="text/javascript" src="http://dotracker.prime-vendor.com/gsatracker/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+      <!--       <link rel="stylesheet" type="text/css" href="http://dotracker.prime-vendor.com/gsatracker/fancybox/jquery.fancybox-1.3.4.css" media="screen" /> -->
+      <script type="text/javascript">
+         $(document).ready(function() {
+          /*
+          *   Examples - images
+          */
+         
+          $("a.example1").fancybox({
+          'width':300,
+          'height':270,
+          'type': 'iframe',
+           'onClosed':function () {
+              window.location.href = window.location.href;
+           },
+            
+          });
+          $("a.comment").fancybox({
+          'width':500,
+          'autoHeight': true,
+          'type': 'iframe'/*,
+          'onClosed':function () {
+              window.location = window.location.href;
+           },*/
+          });
+         $('.delete').click(function(){
+               if(confirm('Are you sure?')){
+                var id = $(this).attr('id');
+                
+                 $.ajax({
+                url: 'http://dotracker.prime-vendor.com/gsatracker/gsaarea/deleteAward',
+                type: 'POST',
+                data: 'id='+id,
+                success: function(data){
+                //  alert(data);
+                  
+                  if(data=='Updated'){
+                       window.location.href = window.location.href; 
+                  }
+                  
+                }//endof function(data)
+                
+                });//endof ajax 
+               }
+               return true;
+           });
+          $('input[type=checkbox]').click(function(){
+            var clerk = $('#clerkname').val();
+            //$("input[type=checkbox]:checked").each(function(){ alert($(this).val()); })
+            if($('.status:checkbox:checked').val()=='all'){
+              var status='all';
+            }else{
+             var status = $('.status:checkbox:checked').map(function() {
+           return this.value;
+         }).get().join();
+            }
+               $.ajax({
+                url: 'http://dotracker.prime-vendor.com/gsatracker/gsaarea/displaySort',
+                type: 'POST',
+                data: {
+                'clerk':clerk,
+                'statusflag':status 
+                },
+                success: function(data){
+                //  alert(data);
+              
+                  $('#result').html(data);
+                  
+                  
+                }//endof function(data)
+                
+                });//endof ajax 
+            
+          });
+         });
+         
+         function ChangePage(page_val){
+         
+         location.href='http://dotracker.prime-vendor.com/gsatracker/gsaarea/index/'+ page_val; 
+         }
+         
+         function sbChangeSort(stNewSort){
+         //alert(document.frmFederal.DIR.value);
+         if(document.frmSearch.stSortFlag.value == stNewSort) //Flipping current search
+         {
+         //Change direction for sort
+         if(document.frmSearch.DIR.value == "A"){
+          document.frmSearch.DIR.value = "D";
+         } else {
+          document.frmSearch.DIR.value = "A";
+         }
+         }
+         else //New search - set default search order
+         {
+         document.frmSearch.DIR.value = "A";
+         }
+         document.frmSearch.action = "http://dotracker.prime-vendor.com/gsatracker/gsaarea/index";
+         document.frmSearch.stSortFlag.value = stNewSort;
+         // alert(document.frmFederal.DIR.value);
+         document.frmSearch.submit();
+         }
+      </script>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>GSA Tracker</title>
+      <style type="text/css">
+         @import url('http://dotracker.prime-vendor.com/gsatracker/css/master.css');
+         .button {padding:1px 10px!important;}
+         .legend-box{
+         float:right;margin: 10px 0 5px;
+         width:300px;
+         border:1px solid #000;
+         }
+         .active{
+         color:#99CDFF;
+         }
+         #fancybox-content{
+         border-color:#F9F9F9 !important; 
+         }
+         .fix-input130{
+         width:130px;
+         }
+         .subhead tr th{
+         background-color:#394976;
+         }
+      </style>
+      <link rel="stylesheet" href="css/gsatracker.css">
+   </head>
+   <body>
+      <form class="form" name="frmSearch" id="frmSearch" method="post" action="http://dotracker.prime-vendor.com/gsatracker/gsaarea/index">
+         <input type="hidden" value="" name="stSortFlag">
+         <input type="hidden" value="" name="DIR">
+         <input type="hidden" name="clerkname" id="clerkname" value="" />
+         <input type="hidden" name="searchoptions" value="" />
+         <div id="wrapper">
+            <div class="page-header">
+               <div class="gsa-logo">
+                  <a href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/index">
+                  <img src="http://dotracker.prime-vendor.com/gsatracker/images/logo.png">
+                  </a>
+               </div>
+               <div class="page-title">
+                  <h1>GSA Mod Tracker</h1>
+               </div>
+            </div>
+            <div class="search-panel">
+               <legend class="search-panel-title">Search By</legend>
+               <div class="radio-group">
+                  <fieldset>
+                     <input id="companyName" type="radio" name="searchby" value="companyName" />
+                     <label for="companyName">Company Name</label>
+                  </fieldset>
+                  <fieldset>
+                     <input id="reference" type="radio" name="searchby" value="clerk" />
+                     <label for="reference">Reference</label>
+                  </fieldset>
+                  <fieldset>
+                     <input id="contractNum" type="radio" name="searchby" value="contractNumber" />
+                     <label for="contractNum">Contract Number</label>
+                  </fieldset>
+                  <fieldset>
+                     <input id="modNum" type="radio" name="searchby" value="modNumber" />
+                     <label for="modNum">Mod Number</label>
+                  </fieldset>
+                  <fieldset>
+                     <input id="modDate" type="radio" name="searchby" value="modEffDate" />
+                     <label for="modDate">Mod Date</label>
+                  </fieldset>
+                  <fieldset>
+                     <input id="modType" type="radio" name="searchby" value="modType" />
+                     <label for="modType">Mod Type</label>
+                  </fieldset>
+               </div>
+               <fieldset>
+                  <input type="text" value="" name="searchdata"  class="fix-input130" />
+                  <input type="submit" name="btnSubmit" value="Search" class="btn btn-search" />
+               </fieldset>
+               <fieldset>
+                  <a href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/input" class="btn btn-input">Input View</a>
+               </fieldset>
+            </div>
+            <div id="container">
+               <div id="result">
+                  <div class="content">
+                     <table class="main table">
+                        <tr>
+                           <td valign="top">
+                              <table class="sub-head">
+                                 <tr>
+                                    <th>Company Name</th>
+                                    <th>Contract #</th>
+                                    <th>Mod #</th>
+                                    <th>Mod Date</th>
+                                    <th>Mod Type</th>
+                                    <th>Line Count</th>
+                                    <th>Reference</th>
+                                    <th>Consultant</th>
+                                    <th>Edit</th>
+                                    <th>Comment</th>
+                                 </tr>
+                                 <tr>
+                                    <td class="pad-lt10">Test company</td>
+                                    <td>cn123</td>
+                                    <td>mn2323</td>
+                                    <td>2021-02-03</td>
+                                    <td>test</td>
+                                    <td>4</td>
+                                    <td>sk</td>
+                                    <td>testCN</td>
+                                    <td>
+                                       <div class="btn-group">
+                                          <a href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/edit/1" class="btn btn-edit">Edit</a>
+                                          <a href="#" class="btn btn-delete">Delete</a>
+                                       </div>
+                                    </td>
+                                    <td width="2%" valign="top" class="noborder">
+                                       <a class="comment" href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/comment/1">
+                                       <img src="http://dotracker.prime-vendor.com/gsatracker/images/view comment.jpg" width="23" height="20" alt="comment" align="absmiddle" />
+                                       </a>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="content">
+                     <table class="main table">
+                        <tr>
+                           <td valign="top">
+                              <table class="sub-head">
+                                 <tr>
+                                    <th class="pad-lt10">Company Name</th>
+                                    <th>Contract #</th>
+                                    <th>Mod #</th>
+                                    <th>Mod Date</th>
+                                    <th>Mod Type</th>
+                                    <th>Line Count</th>
+                                    <th>Reference</th>
+                                    <th>Consultant</th>
+                                    <th>Edit</th>
+                                    <th class="pad-rt10">Comment</th>
+                                 </tr>
+                                 <tr>
+                                    <td class="pad-lt10">Dana Safety-test</td>
+                                    <td>GS-21F-0056</td>
+                                    <td>#38</td>
+                                    <td>2021-02-04</td>
+                                    <td>Add</td>
+                                    <td>83</td>
+                                    <td>Whelen</td>
+                                    <td>Burney</td>
+                                    <td>
+                                       <div class="btn-group">
+                                          <a href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/edit/2" class="btn btn-edit">Edit</a>
+                                          <a href="#" class="btn btn-delete">Delete</a>
+                                       </div>
+                                    </td>
+                                    <td width="2%" valign="top" class="noborder">
+                                       <a class="comment" href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/comment/2">
+                                       <img src="http://dotracker.prime-vendor.com/gsatracker/images/view comment.jpg" width="23" height="20" alt="comment" align="absmiddle" />
+                                       </a>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="content">
+                     <table class="main table">
+                        <tr>
+                           <td valign="top">
+                              <table class="sub-head">
+                                 <tr>
+                                    <th class="pad-lt10">Company Name</th>
+                                    <th>Contract #</th>
+                                    <th>Mod #</th>
+                                    <th>Mod Date</th>
+                                    <th>Mod Type</th>
+                                    <th>Line Count</th>
+                                    <th>Reference</th>
+                                    <th>Consultant</th>
+                                    <th>Edit</th>
+                                    <th class="pad-rt10">Comment</th>
+                                 </tr>
+                                 <tr>
+                                    <td class="pad-lt10">Test company</td>
+                                    <td>cn1</td>
+                                    <td>mn2</td>
+                                    <td>2021-02-03</td>
+                                    <td>mt123</td>
+                                    <td>2</td>
+                                    <td>SK</td>
+                                    <td>sk</td>
+                                    <td>
+                                       <div class="btn-group">
+                                          <a href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/edit/3" class="btn btn-edit">Edit</a>
+                                          <a href="#" class="btn btn-delete">Delete</a>
+                                       </div>
+                                    </td>
+                                    <td width="2%" valign="top" class="noborder">
+                                       <a class="comment" href="http://dotracker.prime-vendor.com/gsatracker/gsaarea/comment/3">
+                                       <img src="http://dotracker.prime-vendor.com/gsatracker/images/view comment.jpg" width="23" height="20" alt="comment" align="absmiddle"/>
+                                       </a>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+                  <div class="pagination">
+                     <table class="table">
+                        <tr>
+                           <td><a href="#">Previous</a></td>
+                           <td>Page 1 of 1</td>
+                           <td><a href="#">Next</a></td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;</td>
+                           <td>
+                              <label>Go to Page</label>
+                              <select name="goto" onchange="location.href='http://dotracker.prime-vendor.com/gsatracker/gsaarea/index/'+ this.value; ">
+                                 <option value="0" selected="selected">1</option>
+                              </select>
+                           </td>
+                           <td>&nbsp;</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <!--<ul id="pagination-clean">
+               <li class="previous-off"><img src="images/award tracker arrow.gif" width="25" height="28" alt="next" align="absmiddle" /></li>
+               <li >1</li>
+               <li>2</li>
+               <li>3</li>
+               <li>4</li>
+               <li>5</li>
+               <li>6</li>
+               <li class="previous-off"><img src="images/award tracker arrow1.gif" width="25" height="28" alt="next" align="absmiddle"  /></li>
+               </ul> -->
+         </div>
+      </form>
+   </body>
+</html>
